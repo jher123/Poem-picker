@@ -6,6 +6,14 @@
     top: 0;
     width: 100%;
   }
+
+//   we created this mixin because we often need to center items
+%center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+}
   
 //   @mixin placeholder {
 //     &.placeholder { @content; }

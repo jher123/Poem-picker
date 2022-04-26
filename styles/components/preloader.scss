@@ -1,0 +1,32 @@
+/// because it's center aligned use the cover mix
+.preloader {
+   
+    @extend %cover;
+    @extend %center;
+
+    background: $color-contessa;
+    color: $color-white;
+
+    text-align: center;
+
+
+    display: none;
+}
+
+.preloader__text {
+    @extend %title-53;
+    // this value comes from the design file
+    max-width: 66rem;
+    
+}
+
+// center align the 0% number
+.preloader__number {
+    @extend %description-14;
+
+    position: absolute;
+     // see in the design how far from the bottom it is
+    bottom: 7.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+}

@@ -1,5 +1,28 @@
+// this is an important reset - if we don't set that is that we include padding it's going to be summed with that
+*,
+*:before,
+*:after
+{
+    box-sizing: border-box;
+}
+
+
+html {
+    // so that things have the same size and shape as designs:
+    // based on the viewport we devide viewport width by the design size 
+    // postCSS when minified will resolve to proper numbers
+    font-size: calc(100vw / 1920 * 10);
+}
+
+
 body {
     font-family: $font-suisse-bp;
     font-size: 16px;
     font-weight: 300;
+}
+
+* {
+    text-decoration: none;
+    outline: none;
+    color:inherit;
 }
