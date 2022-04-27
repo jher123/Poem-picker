@@ -11,26 +11,15 @@
   }
 
 .collections__titles {
-    align-items:center;
-    display: flex;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%) rotate(-90deg);
-    top: 50%;
+    @extend %vertical-titles;
 }
 
 .collections__titles__label {
-    @extend %description-12;
-
-    text-transform: uppercase;
-    text-align: center;
-    transform: rotate(90deg);
+    @extend %vertical-titles__label;
 }
 
 .collections__titles__title {
-    @extend %title-200;
-
-    padding-top: 2rem;
+    @extend %vertical-titles__title;
 }
 
 .collections__gallery {
@@ -42,10 +31,10 @@
     // it will be implemented in JS but we can have CSS fallbacks 
     align-items: center;
     display: flex;
-    top: 50%;
     left: 50%;
     position: absolute;
-    transform: translate(-50%);
+    top: 50%;
+    transform: translate(-22.35rem, -50%);
 }
 
 .collections__gallery__link {
