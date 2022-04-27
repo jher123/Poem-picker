@@ -93,7 +93,8 @@ const handleRequest = async (api) => {
       })
     ])
 
-  //   console.log(about, home, collections);
+  // console.log(about, home, collections)
+  console.log(about)
 
   const assets = []
 
@@ -119,7 +120,7 @@ const handleRequest = async (api) => {
     })
   })
 
-  console.log(assets)
+  // console.log(assets)
 
   return {
     assets,

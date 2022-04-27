@@ -7,38 +7,55 @@ block content
   .about 
     .about__wrapper
       section.about__gallery
-        each media in about.data.gallery
-          figure.about__gallery__media
-            img.about__gallery__media__image(src=media.image.url alt=media.image.alt)
+        .about__gallery__wrapper
+          each media in about.data.gallery
+            figure.about__gallery__media
+              img.about__gallery__media__image(src=media.image.url alt=media.image.alt)
 
       each section in about.data.body
         if section.slice_type == 'title'
-          h2.about__title=section.primary.text
+          h2.about__title!=section.primary.text.replace(/\n/g, '<br>')
 
         if section.slice_type == 'content'
-          section.about__content
+           section.about__content(class=`${section.primary.type === 'Left' ? 'about__content--left' : 'about__content--right' }`)
             .about__content__wrapper
+              .about__content__box
                 p.about__content__label=section.primary.label
-
+                p.about__content__description
+                  | Valentina’s work plays around the surprise of what is possible to make with a simple and thin line: a thread.
+                  br 
+                  br
+                  | Coming from a family with a strong feminine tailoring tradition, she wanted to bring this passionate root into her jewellery world, finding new ways of working with textiles.
+                  br
+                  br
+                  | She weaves freely thousands of meters of threads on a hydrosoluble fabric, cutting or interlacing them one with the other, to let unexpected connections appear.
+                  br
+                  br
+                  | Her approach is both experimental and traditional: she likes to combine contemporary methods with ancient techniques, like Filigree.
+                  | The latest work was chosen by the “Triennale Design Museum” in Milan to be part of the exhibition “W. Women in Italian design” (April 2016- February 2017).
+                
                 //- .about__content__description!=PrismicDOM.RichText.asHtml(section.primary.description)
 
-                figure.about__content__media
-                    img.about__content__media__image(src=section.primary.image.url alt=section.primary.image.alt)
+              figure.about__content__media
+                img.about__content__media__image(src=section.primary.image.url alt=section.primary.image.alt)
 
         if section.slice_type == 'highlight'
           section.about__highlight
             .about__highlight__wrapper
                 if section.primary.label
-                p.about__highlight__label=section.primary.label
+                  p.about__highlight__label=section.primary.label
 
                 h3.about__highlight__title=section.primary.title
 
-                each media in section.items
-                    figure.about__highlight__media
-                        img.about__highlight__media__image(src=media.image.url alt=media.image.alt)
+                 //- it's always good to wrap a gallery so we're creating this class here
+                .about__highlight__medias
+                  each media in section.items
+                      figure.about__highlight__media
+                          img.about__highlight__media__image(src=media.image.url alt=media.image.alt)
 
         if section.slice_type == 'gallery'
           section.about__gallery
-            each media in section.items
-              figure.about__gallery__media
-                img.about__gallery__media__image(src=media.image.url alt=media.image.alt)
+            .about__gallery__wrapper
+              each media in section.items
+                figure.about__gallery__media
+                  img.about__gallery__media__image(src=media.image.url alt=media.image.alt)
