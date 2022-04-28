@@ -1,8 +1,30 @@
+/*!
+ * CSSPlugin 3.10.4
+ * https://greensock.com
+ *
+ * Copyright 2008-2022, GreenSock. All rights reserved.
+ * Subject to the terms at https://greensock.com/standard-license or for
+ * Club GreenSock members, the agreement issued with that membership.
+ * @author: Jack Doyle, jack@greensock.com
+*/
+
+/*!
+ * GSAP 3.10.4
+ * https://greensock.com
+ *
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
+ * Subject to the terms at https://greensock.com/standard-license or for
+ * Club GreenSock members, the agreement issued with that membership.
+ * @author: Jack Doyle, jack@greensock.com
+*/
+
 /*! ../modules/logger/index.js */
 
 /*! ../node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */
 
 /*! ../utils/log.js */
+
+/*! ./CSSPlugin.js */
 
 /*! ./Logger */
 
@@ -63,6 +85,8 @@
 /*! ./forEach */
 
 /*! ./getCurrentScriptSource.js */
+
+/*! ./gsap-core.js */
 
 /*! ./identity */
 
@@ -128,6 +152,8 @@
 
 /*! events */
 
+/*! gsap */
+
 /*! html-entities */
 
 /*! lodash/each */
@@ -174,6 +200,10 @@
   !*** ./app/pages/Detail/index.js ***!
   \***********************************/
 
+/*!************************************!*\
+  !*** ./node_modules/gsap/index.js ***!
+  \************************************/
+
 /*!*************************************!*\
   !*** ./node_modules/lodash/each.js ***!
   \*************************************/
@@ -192,6 +222,14 @@
 
 /*!****************************************!*\
   !*** ./app/pages/Collections/index.js ***!
+  \****************************************/
+
+/*!****************************************!*\
+  !*** ./node_modules/gsap/CSSPlugin.js ***!
+  \****************************************/
+
+/*!****************************************!*\
+  !*** ./node_modules/gsap/gsap-core.js ***!
   \****************************************/
 
 /*!****************************************!*\

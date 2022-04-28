@@ -1,4 +1,5 @@
 import each from 'lodash/each'
+import GSAP from 'gsap'
 
 export default class Page {
   constructor ({
@@ -34,16 +35,26 @@ export default class Page {
         if (this.elements[key].length === 0) {
           // instead of an emoty Node list replace with null
           this.elements[key] = null
-        } else if (this.elements[key].length === 1)
+        } else if (this.elements[key].length === 1) {
         // extract the element from the list because it's hard to work with lists
-        {
           this.elements[key] = document.querySelector(entry)
         }
       }
-
-      // if it's just one element return one element, if it's nothing return null
-      console.log(this.elements[key], entry)
     }
     )
   }
+
+  //  by including default animation here in this file we are able to have default animations all around the app
+  //  this is the beauty of using plain JS and object orientation, it would be harder with React
+  //   show () {
+  //     GSAP.from(this.element, {
+  //         autoAlpha, 0
+  //     })
+  //   }
+
+//   hide () {
+//     GSAP.to(this.element, {
+//         autoAlpha, 0
+//     });
+//   }
 }

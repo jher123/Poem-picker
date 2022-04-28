@@ -1,3 +1,4 @@
+import each from 'lodash/each'
 import About from 'pages/About'
 import Collections from 'pages/Collections'
 import Detail from 'pages/Detail'
@@ -9,6 +10,7 @@ class App {
     // console.log('APP')
     this.createContent()
     this.createPages()
+    this.addLinkListeners()
   }
 
   createContent () {
@@ -36,9 +38,48 @@ class App {
     // this allows us to create one page at once
     this.page = this.pages[this.template]
     this.page.create()
+    // this.page.show()
+    // this.page.hide()
+  }
+
+  async onChange (url) {
+    const request = await window.fetch(url)
+    console.log(request)
+    if (request.status === 200) {
+      const html = await request.text()
+      // we're creating a fake div here to append the html of the requested page
+      const div = document.createElement('div')
+      div.innerHTML = html
+      // overrriding the html with the new page html
+      const divContent = div.querySelector('.content')
+      // let's also update the slug to the new page's one
+      this.content.setAttribute('data-template', divContent.getAttribute('data-attribute'))
+      this.content.innerHTML = divContent.innerHTML
+      console.log(html)
+    } else {
+      console.log('error')
+    }
+  }
+
+  addLinkListeners () {
+    // this methid will go through all links on the website (using lodash)
+    const links = document.querySelectorAll('a')
+
+    each(links, link => {
+      link.onclick = event => {
+        // we avoid redirecting here
+        event.preventDefault()
+
+        // instead we'll use fetch API to request the page without having to refresh the page for the user
+        // we are fetching the page without leaving the previous on
+        // this is the way to impelment what React is doing with AJAX
+        const { href } = link
+
+        this.onChange(href)
+      }
+    })
   }
 }
-
 // Object oriented orientation using JSS-
 // it doesn't make sense to create class in these diff files and copying the same methids and functions over and over again for each of thise diff pages
 // it's creating a file where we can extend and extend diff methods and functions into other classes
