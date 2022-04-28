@@ -12,6 +12,7 @@ html {
     // based on the viewport we devide viewport width by the design size 
     // postCSS when minified will resolve to proper numbers
     font-size: calc(100vw / 1920 * 10);
+    line-height: 1;
 }
 
 

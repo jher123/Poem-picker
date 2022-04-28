@@ -14,10 +14,9 @@
 
 .detail__media {
     // based on design file
+    width: 55.4rem;
     height: 78.2rem;
     position: relative;
-    width: 55.4rem;
-
 }
 
 .detail__media__image {
@@ -50,7 +49,7 @@
 }
 .detail__information__highlights {
     @extend %description-16;
-    margin-top: 6rem;
+    margin-top: 5rem;
 
 }
 
@@ -58,38 +57,30 @@
     align-items: center;
     display: flex;
 
+    &:not(:first-child) {
+        margin-top: 4rem;
+      }
+
 }
 
 .detail__information__highlight__icon {
    height: 4rem;
    width: 4rem;
-   border: 1px solid currentColor;
-   border-radius: 50%;
    margin-right: 3.75rem;
-
-   &:not(:first-child) {
-        margin-top: 4rem;
-    }   
 }
 
 
 
-.detail__information__highlight__text {
+.detail__information__highlight__text{
     @extend %description-16;
-
-
 }
 
 .detail__information__list {
     margin-top: 4rem;
-    
-
-
 
 }
 
 .detail__information__item {
- 
     display: flex;
 
     &:not(:first-child) {
@@ -117,3 +108,28 @@
     display: inline-block;
     margin-top: 3rem;
 }
+
+.detail__button {
+    @extend %description-14;
+  
+    width: 12.4rem;
+    height: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 50%;
+    bottom: 5rem;
+    position: absolute;
+    transform: translateX(-50%);
+    z-index: 2;
+  
+    @include media('<phone') {
+      width: 26.8rem;
+      height: 26.8rem;
+      bottom: 0;
+    }
+  }
+  
+.detail__button__icon {
+    @extend %cover;
+  }

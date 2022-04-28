@@ -100,6 +100,7 @@
 
 .home__link {
     @extend %description-14;
+    letter-spacing: 0.05;
     // this is the button, he usually prefers to set width and height rather than set paddings
     width: 28.8rem;
     height: 6rem;
