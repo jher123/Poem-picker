@@ -46,15 +46,24 @@ export default class Page {
 
   //  by including default animation here in this file we are able to have default animations all around the app
   //  this is the beauty of using plain JS and object orientation, it would be harder with React
-  //   show () {
-  //     GSAP.from(this.element, {
-  //         autoAlpha, 0
-  //     })
-  //   }
+  show () {
+    return new Promise(
+      // resolve the Promise when animation is finalised
+      resolve => {
+        GSAP.from(this.element, {
+          autoAlpha: 0,
+          onComplete: resolve
+        })
+      }
+    )
+  }
 
-//   hide () {
-//     GSAP.to(this.element, {
-//         autoAlpha, 0
-//     });
-//   }
+  hide () {
+    return new Promise(
+      resolve => GSAP.to(this.element, {
+        autoAlpha: 0,
+        onComplete: resolve
+      })
+    )
+  }
 }

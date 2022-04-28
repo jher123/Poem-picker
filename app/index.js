@@ -43,6 +43,10 @@ class App {
   }
 
   async onChange (url) {
+    // 1 -- if I want to go to another page, the first thing I need to do is animate out my current page
+    await this.page.hide()
+
+    // 2 -- fetching the new page
     const request = await window.fetch(url)
     console.log(request)
     if (request.status === 200) {
@@ -52,10 +56,19 @@ class App {
       div.innerHTML = html
       // overrriding the html with the new page html
       const divContent = div.querySelector('.content')
+
+      this.template = divContent.getAttribute('data-template')
+
       // let's also update the slug to the new page's one
       this.content.setAttribute('data-template', divContent.getAttribute('data-attribute'))
       this.content.innerHTML = divContent.innerHTML
-      console.log(html)
+
+      // 3 -- displaying brand new page
+      this.page = this.pages[this.template]
+      this.page.create()
+      this.page.show()
+
+    //   console.log(html)
     } else {
       console.log('error')
     }
