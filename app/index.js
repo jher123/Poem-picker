@@ -17,11 +17,13 @@ class App {
 
   createPreloader () {
     this.preloader = new Preloader()
-    this.preloader.once('completed', this.onPreloaded())
+    // binding is related wit the closure thing
+    this.preloader.once('completed', this.onPreloaded.bind(this))
   }
 
   onPreloaded () {
-    console.log('preloader')
+    // destroy it (itonly after it's hidden)
+    this.preloader.detroy()
   }
 
   // The content element allows to initialise only the page we're currently on

@@ -13,6 +13,17 @@ html {
     // postCSS when minified will resolve to proper numbers
     font-size: calc(100vw / 1920 * 10);
     line-height: 1;
+
+
+    // full hijack for smooth scrolling
+    position: fixed;
+    // equivalent of @extend %cover
+    height: 100%;
+    width: 100%;
+    left:0;
+    top: 0;
+    // disable the bounce effect from the operational system
+    overflow: hidden;
 }
 
 
@@ -40,4 +51,8 @@ button {
     color: inherit;
     cursor: pointer;
     outline: none;
+  }
+
+  .content {
+     @extend %cover
   }

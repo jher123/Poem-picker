@@ -1,5 +1,6 @@
 import each from 'lodash/each'
 import GSAP from 'gsap'
+import { WebpackOptionsValidationError } from 'webpack'
 
 // Object oriented orientation using JS -
 // it doesn't make sense to create class in these diff files and copying the same methids and functions over and over again for each of thise diff pages
@@ -51,23 +52,61 @@ export default class Page {
   //  By including default animation here in this file we are able to have default animations all around the app.
   //  This is the beauty of using plain JS and object orientation, it would be harder with React.
   show () {
-    return new Promise(
+    return new Promise(resolve => {
       // resolve the Promise when animation is finalised
-      resolve => {
-        GSAP.from(this.element, {
-          autoAlpha: 0,
-          onComplete: resolve
-        })
-      }
-    )
+    //   resolve => {
+    //     GSAP.from(this.element, {
+    //       autoAlpha: 0,
+    //       onComplete: resolve
+    //     })
+    //   }
+
+      // we're using a timeline cos we want to include more stuff -
+      // add eventlisteners when all the animations are completed
+      this.animationIn = GSAP.timeline()
+      this.animationIn.fromTo(
+        this.element,
+        { autoAlpha: 0 },
+        { autoAlpha: 1 }
+      )
+
+      this.animationIn.call(_ => {
+        this.addEventListeners()
+        resolve()
+      })
+    })
   }
 
   hide () {
-    return new Promise(
-      resolve => GSAP.to(this.element, {
+    return new Promise(resolve => {
+    // remove event listeners becasue we want to remove all
+    //  the smooth scrolling stuff before the page is hidden
+      this.removeEventListeners()
+
+      this.animationOut = GSAP.timeline()
+      this.animationOut.to(this.element, {
         autoAlpha: 0,
         onComplete: resolve
       })
-    )
+
+    //   GSAP.to(this.element, {
+    //     autoAlpha: 0,
+    //     onComplete: resolve
+    //   })
+    })
+  }
+
+  // There's multiple ways to hijack scroll but he prefers to use the values of the mousewheel event and
+  // do a small calcluation bcs it's going to match the values from webgl
+  onMouseWheel (event) {
+    console.log(event)
+  }
+
+  addEventListeners () {
+    window.addEventListener('mousewheel', this.onMouseWheel)
+  }
+
+  removeEventListeners () {
+    window.removeEventListener('mousewheel', this.onMouseWheel)
   }
 }
