@@ -1,6 +1,7 @@
 import Component from 'classes/Component'
 import each from 'lodash/each'
 import GSAP from 'gsap'
+import { split } from 'utils/text'
 
 export default class Preloader extends Component {
   constructor () {
@@ -11,25 +12,39 @@ export default class Preloader extends Component {
         elements: {
           title: '.preloader__text',
           number: '.preloader__number',
+          numberText: '.preloader__number__text',
           // 1- select all the images on the website
           images: document.querySelectorAll('img')
         }
       }
     )
-    this.length = 0
-    console.log(this.element)
 
+    // replace text to include spans - we do this twice to have 2 spans
+    split({
+      element: this.elements.title,
+      expression: '<br>' // using line breaks to save performance
+    })
+
+    split({
+      element: this.elements.title,
+      expression: '<br>'
+    })
+
+    this.elements.titleSpans =
+        this.elements.title.querySelectorAll('span span')
+
+    this.length = 0
     this.createLoader()
   }
 
-  // Basically we are going through all the images,
+  // 2 - Basically we are going through all the images,
   // checking which ones have been loaded and when it's loaded,
   // we're checking how many are loaded
   createLoader () {
     // 2 - go through all images and preload all these images
-    each(this.elements.images, element => {
-      element.src = element.getAttribute('data-src')
-      element.onloaded = this.onAssetLoaded
+    each(this.elements.images, (image) => {
+      image.onload = (_) => this.onAssetLoaded(image)
+      image.src = image.getAttribute('data-src')
     })
   }
 
@@ -37,8 +52,9 @@ export default class Preloader extends Component {
     this.length += 1
     const percent = this.length / this.elements.images.length
     // replace the number with the calculate percentage of images loaded
-    this.elements.number.inneHTML = `${Math.round(percent * 100)}%`
-
+    this.elements.numberText.innerHTML = `${Math.round(percent * 100)}%`
+    console.log(this.elements.numberText.innerHTML)
+    // console.log(percent)
     if (percent === 1) {
       this.onLoaded()
     }
@@ -53,12 +69,37 @@ export default class Preloader extends Component {
         delay: 1
       })
 
+      this.animateOut.to(
+        this.elements.titleSpans,
+        {
+          duration: 1.5,
+          ease: 'expo.out', // can check greenstock easings for option
+          stagger: 0.1, // it was x to animate the next line
+          y: '100%'
+        }
+      )
+
+      this.animateOut.to(
+        this.elements.numberText,
+        {
+          duration: 1.5,
+          ease: 'expo.out',
+          stagger: 0.1,
+          y: '100%'
+        },
+        '-=1.4'
+      )
+
       this.animateOut.to(this.element, {
-        autoAlpha: 0
-      })
+        scaleY: 0,
+        // 0 0 would be slide out up to the top
+        transformOrigin: '100% 100%',
+        duration: 1.5,
+        ease: 'expo.out'
+      }, '-=1')
 
       this.animateOut.call(_ => {
-
+        this.emit('completed')
       })
     })
   }

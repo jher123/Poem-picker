@@ -1,6 +1,5 @@
 import each from 'lodash/each'
 import GSAP from 'gsap'
-import { WebpackOptionsValidationError } from 'webpack'
 
 // Object oriented orientation using JS -
 // it doesn't make sense to create class in these diff files and copying the same methids and functions over and over again for each of thise diff pages
@@ -64,6 +63,7 @@ export default class Page {
       // we're using a timeline cos we want to include more stuff -
       // add eventlisteners when all the animations are completed
       this.animationIn = GSAP.timeline()
+      // we're animating the page in from opacity 0 to 1
       this.animationIn.fromTo(
         this.element,
         { autoAlpha: 0 },

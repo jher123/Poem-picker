@@ -12,19 +12,37 @@
 }
 
 .preloader__text {
-    @extend %title-53;
     // this value comes from the design file
     max-width: 66rem;
+    font-size: 0;
+
+    // for text animation
+    span {
+        display:inline-block;
+        overflow: hidden;// for the mask
+    }
+
+    // trick - because we're using spans inside of spans, 
+    //  we put this here and above font size 0
+    span span {
+        @extend %title-53;
+      }
+   
     
 }
 
 // center align the 0% number
 .preloader__number {
     @extend %description-14;
+    overflow: hidden;
 
     position: absolute;
      // see in the design how far from the bottom it is
     bottom: 7.3rem;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.preloader__number__text {
+    display: inline-block;
 }

@@ -16,22 +16,24 @@ class App {
   }
 
   createPreloader () {
-    this.preloader = new Preloader()
+    this.preloader = new Preloader({})
     // binding is related wit the closure thing
     this.preloader.once('completed', this.onPreloaded.bind(this))
   }
 
   onPreloaded () {
-    // destroy it (itonly after it's hidden)
-    this.preloader.detroy()
+    // destroy it (only after it's hidden)
+    this.preloader.destroy()
+
+    // the page is only animated once all the website is preloaded
+    this.page.show()
   }
 
   // The content element allows to initialise only the page we're currently on
   createContent () {
     this.content = document.querySelector('.content')
-    this.template = this.content.getAttribute('data-template')
-    console.log(this.template)
     // this returns a string, the name of the page
+    this.template = this.content.getAttribute('data-template')
   }
 
   // Firstly we need to create new pages - this can be a map of all pages we're going to initalise
@@ -50,7 +52,8 @@ class App {
     // This allows us to create one page at once.
     this.page = this.pages[this.template]
     this.page.create()
-    this.page.show()
+    // this could be here but we moved it so it's only after preloader is destroyed
+    // this.page.show()
   }
 
   async onChange (url) {
