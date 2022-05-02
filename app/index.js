@@ -12,21 +12,18 @@ class App {
 
     this.createContent()
     this.createPages()
+
+    this.addEventListeners()
     this.addLinkListeners()
+
+    // this function will be called over and over in each frame of the browser
+    this.update()
   }
 
   createPreloader () {
     this.preloader = new Preloader({})
     // binding is related wit the closure thing
     this.preloader.once('completed', this.onPreloaded.bind(this))
-  }
-
-  onPreloaded () {
-    // destroy it (only after it's hidden)
-    this.preloader.destroy()
-
-    // the page is only animated once all the website is preloaded
-    this.page.show()
   }
 
   // The content element allows to initialise only the page we're currently on
@@ -56,6 +53,18 @@ class App {
     // this.page.show()
   }
 
+  /**  Events ***/
+  onPreloaded () {
+    // destroy it (only after it's hidden)
+    this.preloader.destroy()
+
+    // call this here because smoothscroll is very sensitive to innerHeight
+    this.onResize()
+
+    // the page is only animated once all the website is preloaded
+    this.page.show()
+  }
+
   async onChange (url) {
     // 1 -- if I want to go to another page, the first thing I need to do is animate out my current page
     await this.page.hide()
@@ -80,6 +89,8 @@ class App {
       // 3 -- displaying brand new page
       this.page = this.pages[this.template]
       this.page.create()
+
+      this.onResize()
       this.page.show()
 
       // this is so that we also listen to events in content links - like the button
@@ -89,6 +100,27 @@ class App {
     } else {
       console.log('error')
     }
+  }
+
+  onResize () {
+    if (this.page && this.page.onResize) {
+      this.page.onResize()
+    }
+  }
+
+  /**  Loop ***/
+  update () {
+    // bind here is about closures
+    if (this.page && this.page.update) {
+      this.page.update()
+    }
+    this.frame = window.requestAnimationFrame(this.update.bind(this))
+  }
+
+  /**  Listeners ***/
+  addEventListeners () {
+    console.log(this)
+    window.addEventListener('resize', this.onResize.bind(this))
   }
 
   addLinkListeners () {

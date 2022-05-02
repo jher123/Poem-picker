@@ -53,8 +53,7 @@ export default class Preloader extends Component {
     const percent = this.length / this.elements.images.length
     // replace the number with the calculate percentage of images loaded
     this.elements.numberText.innerHTML = `${Math.round(percent * 100)}%`
-    console.log(this.elements.numberText.innerHTML)
-    // console.log(percent)
+
     if (percent === 1) {
       this.onLoaded()
     }

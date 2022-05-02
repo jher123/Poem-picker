@@ -1,5 +1,6 @@
 import each from 'lodash/each'
 import GSAP from 'gsap'
+import Prefix from 'prefix'
 
 // Object oriented orientation using JS -
 // it doesn't make sense to create class in these diff files and copying the same methids and functions over and over again for each of thise diff pages
@@ -15,6 +16,22 @@ export default class Page {
     this.selectorChildren = {
       ...elements
     }
+
+    // we could use the equivalent function from Greenstock but he prefers to use prefix
+    // to have more control
+    this.transformPrefix = Prefix('transform')
+
+    // smooth scrolling variables
+    this.scroll = {
+      current: 0,
+      target: 0,
+      last: 0,
+      // scroll limit
+      limit: 0
+    }
+
+    // important!
+    this.onMouseWheelEvent = this.onMouseWheel.bind(this)
   }
 
   // This creation method will behave like ComponentDidMount in React
@@ -26,9 +43,16 @@ export default class Page {
     // This will be a map of all elements
     this.elements = {}
 
+    // smooth scrolling variables
+    this.scroll = {
+      current: 0,
+      target: 0,
+      last: 0,
+      limit: 0
+    }
+
     // Automatically select all the selectors
     each(this.selectorChildren, (entry, key) => {
-      console.log(entry)
       // This is useful when we pass DOM elements
       if (entry instanceof window.HTMLElement || entry instanceof window.NodeList || Array.isArray(entry)
       ) {
@@ -99,14 +123,46 @@ export default class Page {
   // There's multiple ways to hijack scroll but he prefers to use the values of the mousewheel event and
   // do a small calcluation bcs it's going to match the values from webgl
   onMouseWheel (event) {
-    console.log(event)
+    const { deltaY } = event
+    this.scroll.target += deltaY
+  }
+
+  onResize () {
+    if (this.elements.wrapper) {
+      this.scroll.limit =
+          this.elements.wrapper.clientHeight - window.innerHeight
+    }
+  }
+
+  update () {
+    // this method is being continously called in the main App
+    // lerping - it's used for doing smooth transitions between one value and
+    // another- interpolation values
+    // this is the concept we are going to use for implementing smooth scrolling
+
+    // clamp target so it's always between 0 and current
+    this.scroll.target = GSAP.utils.clamp(0, this.scroll.limit, this.scroll.target)
+
+    // 0.1 is the easing of interpolation - the lower the number the smoother it will be ]
+    // but this can have performance implications so he usually just uses 0.1
+    this.scroll.current = GSAP.utils.interpolate(this.scroll.current, this.scroll.target, 0.1)
+
+    // Because JS doesn't handle 0 well
+    if (this.scroll.current < 0.01) {
+      this.scroll.current = 0
+    }
+
+    // this wrapper needs to be set in all the views
+    if (this.elements.wrapper) {
+      this.elements.wrapper.style[this.transformPrefix] = `translateY(-${this.scroll.current}px)`
+    }
   }
 
   addEventListeners () {
-    window.addEventListener('mousewheel', this.onMouseWheel)
+    window.addEventListener('mousewheel', this.onMouseWheelEvent)
   }
 
   removeEventListeners () {
-    window.removeEventListener('mousewheel', this.onMouseWheel)
+    window.removeEventListener('mousewheel', this.onMouseWheelEvent)
   }
 }
