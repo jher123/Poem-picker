@@ -1,6 +1,7 @@
 import each from 'lodash/each'
 import GSAP from 'gsap'
 import Prefix from 'prefix'
+import NormalizeWheel from 'normalize-wheel'
 
 // Object oriented orientation using JS -
 // it doesn't make sense to create class in these diff files and copying the same methids and functions over and over again for each of thise diff pages
@@ -123,8 +124,10 @@ export default class Page {
   // There's multiple ways to hijack scroll but he prefers to use the values of the mousewheel event and
   // do a small calcluation bcs it's going to match the values from webgl
   onMouseWheel (event) {
-    const { deltaY } = event
-    this.scroll.target += deltaY
+    // we're using this library to normalize it between different browsers
+    const { pixelY } = NormalizeWheel(event)
+
+    this.scroll.target += pixelY
   }
 
   onResize () {
