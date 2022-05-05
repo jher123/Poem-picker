@@ -119,7 +119,6 @@ class App {
 
   /**  Listeners ***/
   addEventListeners () {
-    console.log(this)
     window.addEventListener('resize', this.onResize.bind(this))
   }
 

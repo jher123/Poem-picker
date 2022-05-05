@@ -3,7 +3,9 @@
     @extend %cover;
 
     color: $color-white;
-    z-index: z('navigation')
+    z-index: z('navigation');
+    position: fixed;
+    pointer-events: none;
 }
 
 .navigation__link {

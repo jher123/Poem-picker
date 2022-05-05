@@ -56,3 +56,13 @@ button {
   .content {
      @extend %cover
   }
+
+[data-animation='title'], [data-animation="label"], [data-animation="paragraph"] {
+    span {
+        display: inline-block;
+        overflow: hidden;
+        // this messes up the line heights so include vertical-align:top
+        vertical-align: top;
+    }
+}
+

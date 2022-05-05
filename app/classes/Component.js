@@ -26,7 +26,11 @@ export default class Component extends EventEmitter {
   }
 
   create () {
-    this.element = document.querySelector(this.selector)
+    if (this.selector instanceof window.HTMLElement) {
+      this.element = this.selector
+    } else {
+      this.element = document.querySelector(this.selector)
+    }
     this.elements = {}
     each(this.selectorChildren, (entry, key) => {
       if (entry instanceof window.HTMLElement || entry instanceof window.NodeList || Array.isArray(entry)

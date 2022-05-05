@@ -1,7 +1,12 @@
 import each from 'lodash/each'
+import map from 'lodash/map'
 import GSAP from 'gsap'
 import Prefix from 'prefix'
 import NormalizeWheel from 'normalize-wheel'
+import Title from 'animations/Title'
+import Paragraph from '../animations/Paragraph'
+import Label from '../animations/Label'
+import Highlight from '../animations/Highlight'
 
 // Object oriented orientation using JS -
 // it doesn't make sense to create class in these diff files and copying the same methids and functions over and over again for each of thise diff pages
@@ -15,7 +20,11 @@ export default class Page {
     this.id = id
     this.selector = element
     this.selectorChildren = {
-      ...elements
+      ...elements,
+      animationsHighlights: '[data-animation="highlight"]',
+      animationsTitles: '[data-animation="title"]',
+      animationsParagraphs: '[data-animation="paragraph"]',
+      animationsLabels: '[data-animation="label"]'
     }
 
     // we could use the equivalent function from Greenstock but he prefers to use prefix
@@ -69,8 +78,51 @@ export default class Page {
           this.elements[key] = document.querySelector(entry)
         }
       }
-    }
-    )
+    })
+
+    this.createAnimations()
+  }
+
+  createAnimations () {
+    // create an array to simplify
+    this.animations = []
+
+    // Highlights
+    this.animationsHighlights = map(this.elements.animationsHighlights, (element) => {
+      return new Highlight({
+        element
+      })
+    })
+
+    this.animations.push(...this.animationsHighlights)
+
+    // Titles
+    // use map from lodash to store in an array in case we need to reuse later
+    this.animationsTitles = map(this.elements.animationsTitles, (element) => {
+      return new Title({
+        element
+      })
+    })
+
+    this.animations.push(...this.animationsTitles)
+
+    // Paragraphs
+    this.animationsParagraphs = map(this.elements.animationsParagraphs, (element) => {
+      return new Paragraph({
+        element
+      })
+    })
+
+    this.animations.push(...this.animationsParagraphs)
+
+    // Labels
+    this.animationsLabels = map(this.elements.animationsLabels, (element) => {
+      return new Label({
+        element
+      })
+    })
+
+    this.animations.push(...this.animationsLabels)
   }
 
   //  By including default animation here in this file we are able to have default animations all around the app.
@@ -135,6 +187,9 @@ export default class Page {
       this.scroll.limit =
           this.elements.wrapper.clientHeight - window.innerHeight
     }
+
+    // this for animation
+    each(this.animations, animation => animation.onResize())
   }
 
   update () {
