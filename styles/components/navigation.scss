@@ -3,7 +3,7 @@
 
     color: $color-white;
     z-index: z('navigation');
-    position: fixed;
+
     pointer-events: none;
 
 }
@@ -36,9 +36,6 @@
 }
 .navigation__list__item {
     // because they will always live in the same right position
-    position: absolute;
-    right: 4rem;
-    top: 4rem;
     pointer-events: auto;
 }
 

@@ -14,6 +14,22 @@
 
 }
 
+.home__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.home__content__title {
+    @extend %title-53;
+}
+
+.home__content__label {
+    @extend %description-14;
+}
+
+
 .home__link {
     @extend %description-14;
     letter-spacing: 0.05;
@@ -23,12 +39,12 @@
     align-items: center;
     justify-content: center;
     display:flex;
-    position: absolute; // because it's in a wrapper
-    bottom: 5rem;
-    left: 50%;
+    // position: absolute; // because it's in a wrapper
+    // bottom: 5rem;
+    // left: 50%;
     text-transform: uppercase;
     letter-spacing: 0.05rem;
-    transform: translateX(-50%);
+    // transform: translateX(-50%);
     z-index: 2;
 } 
 

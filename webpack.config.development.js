@@ -7,11 +7,15 @@ module.exports = merge(config, {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
+    static: {
+      directory: path.join(__dirname, 'public')
+    },
+    historyApiFallback: true,
     devMiddleware: {
       writeToDisk: true
     },
     client: {
-      logging: 'error'
+      logging: 'warn'
     },
     hot: true
   },
