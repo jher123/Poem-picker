@@ -1,6 +1,7 @@
 import each from 'lodash/each'
 import About from 'pages/About'
 import Home from 'pages/Home'
+import Poem from 'pages/Poem'
 import Preloader from 'components/preloader'
 import Navigation from 'components/Navigation'
 
@@ -16,14 +17,23 @@ class App {
 
     this.createHome()
     this.createAbout()
+    this.createPoem()
 
     this.pages = {
       '/': this.home,
       '/about': this.about,
       // TODO: hack -when going directly to route, browser adds / so without this double entry here there's an error
-      '/about/': this.about
+      '/about/': this.about,
+      '/poem': this.poem,
+      '/poem/': this.poem
     }
-    this.page = this.pages[this.url]
+    // this.page = this.pages[this.url]
+    if (this.url.indexOf('/poem') > -1) {
+      this.page = this.case
+      this.page.onResize()
+    } else {
+      this.page = this.pages[this.url]
+    }
 
     this.addEventListeners()
     this.addLinkListeners()
@@ -62,6 +72,12 @@ class App {
     console.log('Create home')
     this.home = new Home()
     this.home.create()
+  }
+
+  createPoem () {
+    console.log('Create poem')
+    this.poem = new Poem()
+    this.poem.create()
   }
 
   /**  Events ***/
@@ -104,7 +120,13 @@ class App {
     this.navigation.onChange(this.url)
 
     // displaying the new page
-    this.page = this.pages[this.url]
+    if (this.url.indexOf('/poem') > -1) {
+      this.page = this.poem
+    } else {
+      this.page = this.pages[this.url]
+    }
+
+    // this.page = this.pages[this.url]
     this.page.create()
 
     this.onResize()

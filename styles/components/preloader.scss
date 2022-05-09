@@ -3,8 +3,8 @@
     @extend %cover;
     @extend %center;
 
-    background: $color-white;
-    color: $color-black;
+    background-color: $color-green;
+    color: $color-white;
 
     text-align: center;
     z-index: z('preloader');
@@ -12,12 +12,12 @@
 
 .preloader__text {
     // this value comes from the design file
-    max-width: 66rem;
+    max-width: 266rem;
     font-size: 0;
 
     // for text animation
     span {
-        display:inline-block;
+        display: inline-block;
         overflow: hidden;// for the mask
     }
 
@@ -25,9 +25,17 @@
     //  we put this here and above font size 0
     span span {
         @extend %title-53;
-      }
+    }
    
     
+}
+
+.preloader__text__serif {
+    @extend %title-53;
+}
+
+.preloader__text__sans {
+    @extend %title-53;
 }
 
 // center align the 0% number

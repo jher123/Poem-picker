@@ -19,7 +19,9 @@ const dirNode = 'node_modules'
 
 const folders = [
   'index.html',
-  'about/index.html'
+  'about/index.html',
+  'poem/spring/index.html',
+  'poem/cloud/index.html'
 ]
 
 const mapFolders = folders.map(filename => {

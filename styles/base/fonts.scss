@@ -1,16 +1,12 @@
 @font-face {
-    font-family: $font-george-x;
-    src: url('../fonts/george_x-webfont.woff') format('woff'),
-        url('../fonts/george_x-webfont.woff2') format('woff2');
-    font-weight: normal;
+    font-family: $font-sprat;
+    src: url('../fonts/Sprat-CondensedThin.woff') format('woff');
+    font-weight: 200;
     font-style: normal;
     }
   
 @font-face {
-    font-family: $font-suisse-bp;
-    src: url('../fonts/suissebpintl-light-webfont.woff2') format('woff2'),
-        url('../fonts/suissebpintl-light-webfont.woff') format('woff');
-    font-weight: 300;
+    font-family: $font-neue-haas-grotesk-regular sans-serif;
+    font-weight: 500;
     font-style: normal;
 }
-

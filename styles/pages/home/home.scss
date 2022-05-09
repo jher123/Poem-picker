@@ -15,15 +15,25 @@
 }
 
 .home__content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
+ 
 }
 
-.home__content__title {
-    @extend %title-53;
+
+
+.home__content__title__serif {
+    @extend %title-lg-serif;
+
+    color: $color-golden;
+    text-align: left
 }
+
+.home__content__title__sans {
+    @extend %title-lg-sans;
+
+    color: $color-golden;
+    text-align: right;
+}
+
 
 .home__content__label {
     @extend %description-14;
