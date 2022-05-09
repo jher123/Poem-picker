@@ -6,11 +6,9 @@ import NormalizeWheel from 'normalize-wheel'
 import Title from 'animations/Title'
 import Paragraph from '../animations/Paragraph'
 import Label from '../animations/Label'
-import Highlight from '../animations/Highlight'
+import { ColorsManager } from 'classes/Colors'
+import AsyncLoad from 'classes/AsyncLoad'
 
-// Object oriented orientation using JS -
-// it doesn't make sense to create class in these diff files and copying the same methids and functions over and over again for each of thise diff pages
-// it's creating a file where we can extend and extend diff methods and functions into other classes
 export default class Page {
   constructor ({
     id,
@@ -21,10 +19,12 @@ export default class Page {
     this.selector = element
     this.selectorChildren = {
       ...elements,
-      animationsHighlights: '[data-animation="highlight"]',
       animationsTitles: '[data-animation="title"]',
       animationsParagraphs: '[data-animation="paragraph"]',
-      animationsLabels: '[data-animation="label"]'
+      animationsLabels: '[data-animation="label"]',
+
+      // this is for the image preloader
+      preloaders: '[data-src]'
     }
 
     // we could use the equivalent function from Greenstock but he prefers to use prefix
@@ -71,7 +71,7 @@ export default class Page {
         this.elements[key] = document.querySelectorAll(entry)
 
         if (this.elements[key].length === 0) {
-          // instead of an empty Node list replace with null
+          // replace an empty Node list with null
           this.elements[key] = null
         } else if (this.elements[key].length === 1) {
         // extract the element from the list because it's hard to work with lists
@@ -81,23 +81,21 @@ export default class Page {
     })
 
     this.createAnimations()
+    this.createPreloader()
+  }
+
+  // Aync image preloader
+  createPreloader () {
+    this.preloaders = map(this.elements.preloaders, element => {
+      return new AsyncLoad({ element })
+    })
   }
 
   createAnimations () {
     // create an array to simplify
     this.animations = []
 
-    // Highlights
-    this.animationsHighlights = map(this.elements.animationsHighlights, (element) => {
-      return new Highlight({
-        element
-      })
-    })
-
-    this.animations.push(...this.animationsHighlights)
-
     // Titles
-    // use map from lodash to store in an array in case we need to reuse later
     this.animationsTitles = map(this.elements.animationsTitles, (element) => {
       return new Title({
         element
@@ -112,7 +110,6 @@ export default class Page {
         element
       })
     })
-
     this.animations.push(...this.animationsParagraphs)
 
     // Labels
@@ -121,7 +118,6 @@ export default class Page {
         element
       })
     })
-
     this.animations.push(...this.animationsLabels)
   }
 
@@ -129,13 +125,10 @@ export default class Page {
   //  This is the beauty of using plain JS and object orientation, it would be harder with React.
   show () {
     return new Promise(resolve => {
-      // resolve the Promise when animation is finalised
-    //   resolve => {
-    //     GSAP.from(this.element, {
-    //       autoAlpha: 0,
-    //       onComplete: resolve
-    //     })
-    //   }
+      ColorsManager.change({
+        backgroundColor: this.element.getAttribute('data-background'),
+        color: this.element.getAttribute('data-color')
+      })
 
       // we're using a timeline cos we want to include more stuff -
       // add eventlisteners when all the animations are completed
@@ -165,11 +158,6 @@ export default class Page {
         autoAlpha: 0,
         onComplete: resolve
       })
-
-    //   GSAP.to(this.element, {
-    //     autoAlpha: 0,
-    //     onComplete: resolve
-    //   })
     })
   }
 
@@ -192,13 +180,12 @@ export default class Page {
     each(this.animations, animation => animation.onResize())
   }
 
+  // This method is being continously called in the main App
   update () {
-    // this method is being continously called in the main App
-    // lerping - it's used for doing smooth transitions between one value and
-    // another- interpolation values
-    // this is the concept we are going to use for implementing smooth scrolling
+    // Lerping is used for doing smooth transitions between one value and another- interpolation values.
+    // We're going to use this concept for implementing smooth scrolling.
 
-    // clamp target so it's always between 0 and current
+    // clamp scroll target so it's always between 0 and current
     this.scroll.target = GSAP.utils.clamp(0, this.scroll.limit, this.scroll.target)
 
     // 0.1 is the easing of interpolation - the lower the number the smoother it will be ]

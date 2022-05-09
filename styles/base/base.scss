@@ -24,6 +24,9 @@ html {
     top: 0;
     // disable the bounce effect from the operational system
     overflow: hidden;
+
+    background: $color-white;
+    color: $color-black;
 }
 
 
@@ -43,6 +46,16 @@ a {
 img {
     // this way the links are not having a small gap between the image?
     vertical-align: middle;
+
+    // to avoid image flashes before loading
+    opacity: 0;
+    transition: opacity 0.4s ease;
+
+    // opacity 1 when they are loaded
+    &.loaded {
+        opacity: 1;
+    };
+
 }
 
 button {

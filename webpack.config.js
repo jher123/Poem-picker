@@ -1,11 +1,14 @@
 const path = require('path')
 const webpack = require('webpack')
 
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HTMLInlineCSSWebpackPlugin = require('html-inline-css-webpack-plugin').default
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const PugPlugin = require('pug-plugin')
 
 const IS_DEVELOPMENT = process.env.NODE_ENV === 'dev'
 
@@ -14,9 +17,29 @@ const dirShared = path.join(__dirname, 'shared')
 const dirStyles = path.join(__dirname, 'styles')
 const dirNode = 'node_modules'
 
+const folders = [
+  'index.html',
+  'about/index.html'
+]
+
+const mapFolders = folders.map(filename => {
+  return new HtmlWebpackPlugin({
+    filename,
+    template: path.join(__dirname, 'index.pug')
+  })
+})
+
 console.log(dirApp, dirShared, dirStyles)
 
 module.exports = {
+  // output: {
+  //   path: path.join(__dirname, 'public/'),
+  //   publicPath: '/'
+  // },
+  output: {
+    filename: '[name].[contenthash].js',
+    publicPath: path.join(__dirname, 'public/')
+  },
   entry: [path.join(dirApp, 'index.js'), path.join(dirStyles, 'index.scss')],
   resolve: {
     modules: [dirApp, dirShared, dirNode, dirStyles]
@@ -33,6 +56,8 @@ module.exports = {
         }
       ]
     }),
+
+    ...mapFolders,
 
     new MiniCssExtractPlugin({
       filename: '[name].css',
@@ -53,7 +78,9 @@ module.exports = {
       }
     }),
 
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new HTMLInlineCSSWebpackPlugin(),
+    new PugPlugin()
   ],
   module: {
     rules: [
@@ -63,7 +90,10 @@ module.exports = {
           loader: 'babel-loader'
         }
       },
-
+      {
+        test: /\.pug$/,
+        loader: PugPlugin.loader
+      },
       {
         test: /\.scss$/,
         use: [

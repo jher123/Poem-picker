@@ -7,9 +7,9 @@
 @import './utils/responsive';
 
 @import './shared/descriptions';
+@import './shared/links';
 @import './shared/pages';
 @import './shared/titles';
-@import './shared/vertical-titles';
 
 @import './base/fonts';
 
@@ -21,11 +21,5 @@
 @import './pages/home/home';
 
 @import './pages/about/about';
-@import './pages/about/content';
-@import './pages/about/gallery';
-@import './pages/about/highlight';
 
-@import './pages/collections/collections';
-
-@import './pages/detail/detail';
 

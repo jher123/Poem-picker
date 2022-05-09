@@ -9,6 +9,8 @@ export default class Animation extends Component {
     this.animateOut()
   }
 
+  // Intersection Observer is an API from JS that will tell you when an element is in the viewport. It works asynchronously.
+  // We can use it for animating in elements when they are in the viewport - this is the approach he used in Garoa
   createObserver () {
     this.observer = new window.IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -39,6 +41,3 @@ export default class Animation extends Component {
 
   }
 }
-
-// IO is an APi from JS that will tell you when an element is in the viewport. it works asynchronously.
-// We can use it for animating in elements when they are in the viewport - this is the approach he used in Garoa

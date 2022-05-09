@@ -1,5 +1,8 @@
 %page {
-    @extend %cover
+    @extend %cover;
+    /* prevent flashing in page transitions with our animations  for seamless transition between pages*/
+    opacity: 0;
+    visibility: hidden;
 
 }
 

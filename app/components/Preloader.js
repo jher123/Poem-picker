@@ -18,6 +18,7 @@ export default class Preloader extends Component {
         }
       }
     )
+    console.log('Preloader start')
 
     // replace text to include spans - we do this twice to have 2 spans
     split({
@@ -34,7 +35,8 @@ export default class Preloader extends Component {
         this.elements.title.querySelectorAll('span span')
 
     this.length = 0
-    this.createLoader()
+    // this.createLoader()
+    this.onLoaded()
   }
 
   // 2 - Basically we are going through all the images,
@@ -61,6 +63,8 @@ export default class Preloader extends Component {
 
   // hide the preloader before destroying it in the main App class
   onLoaded () {
+    console.log('Preloaded loaded')
+
     return new Promise(resolve => {
       // resolve the promise when the animation is completed
       this.animateOut = GSAP.timeline({

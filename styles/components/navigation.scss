@@ -1,21 +1,30 @@
 .navigation {
-    // usually he prefers to have nav covering everything bcs sometimes in mobile menus we have overlays 
     @extend %cover;
 
     color: $color-white;
     z-index: z('navigation');
     position: fixed;
     pointer-events: none;
+
 }
 
 .navigation__link {
-    font-size: 0; // because we have a logo but also want to include the title?
+    // because we have a logo but also want to include the title?
+    font-size: 0;
     // this is for the logo
     height: 2rem;
     left: 4rem;
     position: absolute;
     top: 4rem;
     width: 12.8rem;
+    pointer-events: auto;
+
+    transition: opacity 0.4s ease;
+
+    &:hover {
+        opacity: 0.5;
+    }
+
 }
 
 .navigation__link__icon {
@@ -30,11 +39,11 @@
     position: absolute;
     right: 4rem;
     top: 4rem;
-
-
+    pointer-events: auto;
 }
 
 .navigation__list__link {
-    @extend %title-20;
+    @extend %link--hidden;
     display: block;
+    line-height: 1;
 } 
