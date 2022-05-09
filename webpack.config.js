@@ -34,7 +34,7 @@ console.log(dirApp, dirShared, dirStyles)
 module.exports = {
   // output: {
   //   path: path.join(__dirname, 'public/'),
-  //   publicPath: '/'
+  //   publicPath: path.join(__dirname, 'public/')
   // },
   output: {
     filename: '[name].[contenthash].js',

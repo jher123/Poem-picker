@@ -18,7 +18,6 @@ export default class Preloader extends Component {
         }
       }
     )
-    console.log('Preloader start')
 
     // replace text to include spans - we do this twice to have 2 spans
     split({

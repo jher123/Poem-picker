@@ -1,7 +1,13 @@
 .about {
+    @extend %center;
+    @extend %page;
     
 }
 
 .about__wrapper {
+}
+
+.about__text {
+
 }
 

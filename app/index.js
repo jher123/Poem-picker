@@ -19,11 +19,11 @@ class App {
 
     this.pages = {
       '/': this.home,
-      '/about': this.about
+      '/about': this.about,
+      // TODO: hack -when going directly to route, browser adds / so without this double entry here there's an error
+      '/about/': this.about
     }
-
     this.page = this.pages[this.url]
-    this.page.show(this.url)
 
     this.addEventListeners()
     this.addLinkListeners()
@@ -33,7 +33,6 @@ class App {
   }
 
   createPreloader () {
-    console.log('Create preloader')
     this.preloader = new Preloader({})
     // binding is related wit the closure thing
     this.preloader.once('completed', this.onPreloaded.bind(this))
@@ -67,8 +66,11 @@ class App {
 
   /**  Events ***/
   onPreloaded () {
-    // destroy it (only after it's hidden)
+    console.log('On preloaded call')
+
+    // TODO: estroy it (only after it's hidden)
     this.preloader.destroy()
+    console.log('preloader destroyed')
 
     // call this here because smoothscroll is very sensitive to innerHeight
     this.onResize()
@@ -80,48 +82,39 @@ class App {
   async onChange (url = null, push = true) {
     url = url.replace(window.location.origin, '')
 
-    // 1 -- if I want to go to another page, the first thing I need to do is animate out my current page
-    await this.page.hide()
+    if (this.isFetching || this.url === url) return
 
-    // 2 -- fetching the new page
-    const request = await window.fetch(url)
+    this.isFetching = true
 
     this.url = url
 
-    if (request.status === 200) {
-      const html = await request.text()
-      // we're creating a fake div here to append the html of the requested page
-      const div = document.createElement('div')
-
-      // update the slug to the new page's one
-      if (push) {
-        window.history.pushState({}, '', url)
-      }
-
-      div.innerHTML = html
-      // overriding the html with the new page html
-      const divContent = div.querySelector('.content')
-
-      this.template = divContent.getAttribute('data-template')
-
-      // for navigation we won't have any listeners, we'll just call onChnage here
-      this.navigation.onChange(this.url)
-
-      // update content
-      this.content.innerHTML = divContent.innerHTML
-
-      // 3 -- displaying brand new page
-      this.page = this.pages[this.url]
-      this.page.create()
-
-      this.onResize()
-      this.page.show()
-
-      // this is so that we also listen to events in content links - like the button
-      this.addLinkListeners()
-    } else {
-      console.log('error')
+    if (this.canvas) {
+      this.canvas.onChange(this.url)
     }
+
+    // animate out my current page before going to the next page
+    await this.page.hide()
+
+    // update the slug to the new page's one
+    if (push) {
+      window.history.pushState({}, '', url)
+    }
+
+    // change navigation links?
+    this.navigation.onChange(this.url)
+
+    // displaying the new page
+    this.page = this.pages[this.url]
+    this.page.create()
+
+    this.onResize()
+    await this.page.show()
+    // this.page.show() // instead ??
+
+    // this is so that we also listen to events in content links - like the button
+    this.addLinkListeners()
+
+    this.isFetching = false
   }
 
   onResize () {

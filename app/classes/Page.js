@@ -124,6 +124,7 @@ export default class Page {
   //  By including default animation here in this file we are able to have default animations all around the app.
   //  This is the beauty of using plain JS and object orientation, it would be harder with React.
   show () {
+    console.log('page show call')
     return new Promise(resolve => {
       ColorsManager.change({
         backgroundColor: this.element.getAttribute('data-background'),

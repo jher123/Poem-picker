@@ -1,7 +1,37 @@
 .home {
+    @extend %center;
+    @extend %page;
+
+    // background: $color-contessa;
+    // color: $color-white;
+    overflow: hidden;
+    text-align: center;
+
 
 
 }
 .home__wrapper {
 
 }
+
+.home__link {
+    @extend %description-14;
+    letter-spacing: 0.05;
+    // this is the button, he usually prefers to set width and height rather than set paddings
+    width: 28.8rem;
+    height: 6rem;
+    align-items: center;
+    justify-content: center;
+    display:flex;
+    position: absolute; // because it's in a wrapper
+    bottom: 5rem;
+    left: 50%;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    transform: translateX(-50%);
+    z-index: 2;
+} 
+
+.home__link__icon {
+    @extend %cover;
+  }
