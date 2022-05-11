@@ -34,14 +34,15 @@ const mapFolders = folders.map(filename => {
 console.log(dirApp, dirShared, dirStyles)
 
 module.exports = {
-  // output: {
-  //   path: path.join(__dirname, 'public/'),
-  //   publicPath: path.join(__dirname, 'public/')
-  // },
   output: {
-    filename: '[name].[contenthash].js',
+    path: path.join(__dirname, 'public/'),
     publicPath: path.join(__dirname, 'public/')
   },
+  // This causes the 404 can't find main.<has>.js file??
+  // output: {
+  //   filename: '[name].[contenthash].js',
+  //   publicPath: path.join(__dirname, 'public/')
+  // },
   entry: [path.join(dirApp, 'index.js'), path.join(dirStyles, 'index.scss')],
   resolve: {
     modules: [dirApp, dirShared, dirNode, dirStyles]
@@ -130,20 +131,29 @@ module.exports = {
         test: /\.(jpe?g|png|gif|svg|woff2?|fnt|webp)$/,
         type: 'asset/resource',
         generator: {
-          filename: '[name][ext]'
+          filename: '[name].[ext]'
         }
       },
       {
-        test: /\.(jpe?g|png|gif|svg|webp)$/i,
+        test: /\.(jpe?g|png|gif|svg|webp)$/,
         use: [
+          // {
+          //   loader: ImageMinimizerPlugin.loader,
+          //   options: {
+          //     minimizer: {
+          //       implementation: ImageMinimizerPlugin.imageminMinify
+          //     }
+          //   }
+          // }
           {
-            loader: ImageMinimizerPlugin.loader,
+            loader: 'file-loader',
             options: {
-              minimizer: {
-                implementation: ImageMinimizerPlugin.imageminMinify
+              name (file) {
+                return '[hash].[ext]'
               }
             }
           }
+
         ]
       },
       {

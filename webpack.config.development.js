@@ -17,6 +17,7 @@ module.exports = merge(config, {
     client: {
       logging: 'warn'
     },
+    headers: { 'Access-Control-Allow-Origin': '*' },
     hot: true
   },
   output: {

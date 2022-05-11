@@ -1,17 +1,25 @@
 %title-53 {
     font-family: $font-sprat;
-    font-size: 5.3rem;
+    font-size: 4.3rem;
     line-height: 1;
+    letter-spacing: -0.05rem;
 }
 
 %title-lg-serif {
     font-family: $font-sprat;
     font-size: 11rem;
     line-height: 1;
+    letter-spacing: -0.05rem;
 }
 
 %title-lg-sans {
     font-family: $font-neue-haas-grotesk-regular;
     font-size: 11rem;
     line-height: 1;
+}
+
+%title-md {
+    font-family: $font-neue-haas-grotesk-regular;
+    font-size: 5rem;
+    line-height: 1.2;
 }

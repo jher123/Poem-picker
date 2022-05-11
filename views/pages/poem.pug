@@ -1,3 +1,104 @@
-.poem 
-    .poem__wrapper 
-        .poem__title Title poem
+mixin template( { id, title, author, text, gallery})
+    article.poem(id=id)
+         .poem__wrapper
+            h2.poem__intro Your poem is ...
+            h1.poem__title
+                span.poem__title__text=title
+            
+            .poem__author
+                | By
+                | #{author}
+
+            .poem__text
+                | #{text}
+
+            .poem__gallery
+                figure.poem__gallery__media
+                    img.poem__gallery__media__image(data-src=`/poem/${id}/${gallery[0].image}.jpg` alt="Image 1" )
+            
+            a.poem__link(href="/") Go home
+                svg.poem__link__icon(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 60")
+                    path(stroke="currentColor" fill="none" d="M456.5,98.5c-19.41,0-38.24.79-56,2.35a398.43,398.43,0,0,0-45.66,6.42c-6.49,1.35-12.37,2.83-17.49,4.41a91.29,91.29,0,0,0-13.13,5,30.12,30.12,0,0,0-8.12,5.43c-1.75,1.79-2.64,3.59-2.64,5.35s.89,3.56,2.64,5.35a30.12,30.12,0,0,0,8.12,5.43,91.29,91.29,0,0,0,13.13,5c5.12,1.58,11,3.06,17.49,4.41a398.43,398.43,0,0,0,45.66,6.42c17.72,1.56,36.55,2.35,56,2.35s38.24-.79,56-2.35a398.43,398.43,0,0,0,45.66-6.42c6.49-1.35,12.37-2.83,17.49-4.41a91.29,91.29,0,0,0,13.13-5,30.12,30.12,0,0,0,8.12-5.43c1.75-1.79,2.64-3.59,2.64-5.35s-.89-3.56-2.64-5.35a30.12,30.12,0,0,0-8.12-5.43,91.29,91.29,0,0,0-13.13-5c-5.12-1.58-11-3.06-17.49-4.41a398.43,398.43,0,0,0-45.66-6.42c-17.72-1.56-36.55-2.35-56-2.35m0-1c79.53,0,144,13.43,144,30s-64.47,30-144,30-144-13.43-144-30S377,97.5,456.5,97.5Z" transform="translate(-312.5 -97.5)")
+                    path.home__link__icon__path(stroke=currentColor fill="none" d="M456.5,98.5c-19.41,0-38.24.79-56,2.35a398.43,398.43,0,0,0-45.66,6.42c-6.49,1.35-12.37,2.83-17.49,4.41a91.29,91.29,0,0,0-13.13,5,30.12,30.12,0,0,0-8.12,5.43c-1.75,1.79-2.64,3.59-2.64,5.35s.89,3.56,2.64,5.35a30.12,30.12,0,0,0,8.12,5.43,91.29,91.29,0,0,0,13.13,5c5.12,1.58,11,3.06,17.49,4.41a398.43,398.43,0,0,0,45.66,6.42c17.72,1.56,36.55,2.35,56,2.35s38.24-.79,56-2.35a398.43,398.43,0,0,0,45.66-6.42c6.49-1.35,12.37-2.83,17.49-4.41a91.29,91.29,0,0,0,13.13-5,30.12,30.12,0,0,0,8.12-5.43c1.75-1.79,2.64-3.59,2.64-5.35s-.89-3.56-2.64-5.35a30.12,30.12,0,0,0-8.12-5.43,91.29,91.29,0,0,0-13.13-5c-5.12-1.58-11-3.06-17.49-4.41a398.43,398.43,0,0,0-45.66-6.42c-17.72-1.56-36.55-2.35-56-2.35m0-1c79.53,0,144,13.43,144,30s-64.47,30-144,30-144-13.43-144-30S377,97.5,456.5,97.5Z" transform="translate(-312.5 -97.5)")
+
+
+
+.poems(data-background="#FFECC7" data-color="#333")
+    .poems__wrapper
+        +template({
+                id: 'spring',
+                title: 'Spring',
+                author: "William Wordsworth",
+                text: `I wandered lonely as a cloud
+                        That floats on high o'er vales and hills,
+                        When all at once I saw a crowd,
+                        A host, of golden daffodils;
+                        Beside the lake, beneath the trees,
+                        Fluttering and dancing in the breeze.
+
+                    Continuous as the stars that shine
+                    And twinkle on the milky way,
+                    They stretched in never-ending line
+                    Along the margin of a bay:
+                    Ten thousand saw I at a glance,
+                    Tossing their heads in sprightly dance.
+
+                    The waves beside them danced; but they
+                    Out-did the sparkling waves in glee:
+                    A poet cou          ld not but be gay,
+                    In such a jocund company:
+                    I gazed—and gazed—but little thought
+                    What wealth the show to me had brought:
+
+                    For oft, when on my couch I lie
+                    In vacant or in pensive mood,
+                    They flash upon that inward eye
+                    Which is the bliss of solitude;
+                    And then my heart with pleasure fills,
+                    And dances with the daffodils.`,
+                gallery: [
+                    { image: '1', height: '1080', width: '1920' },
+                    { image: '2', height: '1080', width: '1920' },
+                    { image: '3', height: '1080', width: '1920' },
+                    { image: '4', height: '1080', width: '1920' },
+                    ]
+            })          
+
+        //- +template({
+        //-     id: 'clouds',
+        //-     title: 'Clouds',
+        //-     author: "William Wordsworth",
+        //-     text: `I wandered lonely as a cloud
+        //-             That floats on high o'er vales and hills,
+        //-             When all at once I saw a crowd,
+        //-             A host, of golden daffodils;
+        //-             Beside the lake, beneath the trees,
+        //-             Fluttering and dancing in the breeze.
+
+        //-             Continuous as the stars that shine
+        //-             And twinkle on the milky way,
+        //-             They stretched in never-ending line
+        //-             Along the margin of a bay:
+        //-             Ten thousand saw I at a glance,
+        //-             Tossing their heads in sprightly dance.
+
+        //-             The waves beside them danced; but they
+        //-             Out-did the sparkling waves in glee:
+        //-             A poet could not but be gay,
+        //-             In such a jocund company:
+        //-             I gazed—and gazed—but little thought
+        //-             What wealth the show to me had brought:
+
+        //-             For oft, when on my couch I lie
+        //-             In vacant or in pensive mood,
+        //-             They flash upon that inward eye
+        //-             Which is the bliss of solitude;
+        //-             And then my heart with pleasure fills,
+        //-             And dances with the daffodils.`,
+        //-     gallery: [
+        //-     { image: '1', height: '708', width: '398' },
+        //-     { image: '2', height: '519', width: '519' },
+        //-     { image: '3', height: '691', width: '460' },
+        //-     { image: '4', height: '753', width: '502' },
+        //-     ]
+        //- })

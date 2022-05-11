@@ -1,0 +1,104 @@
+.poems {
+    // @extend %page;
+  
+  
+
+    @extend %page;
+    &--active {
+      @extend %page--active;
+    }
+    // background: $color-white;
+    // color: $color-black;
+}
+
+.poems__wrapper {
+  // @extend %page;
+  // &--active {
+  //   @extend %page--active;
+  // }
+
+}
+  
+.poem {
+ 
+  
+  
+  
+    // &--active {
+    //   opacity: 1;
+    //   transition: none;
+    //   visibility: visible;
+    // }
+  
+    // @include media('<=phone') {
+    //   padding: 5rem 0;
+    // }
+
+
+}
+
+
+
+.poem__wrapper {
+}
+
+
+.poem__intro {
+
+}
+
+.poem__title{
+  @extend %title-lg-serif;
+
+}
+
+.poem__author{
+
+}
+
+.poem__text {
+}
+
+.poem__gallery {
+  width: 100%;
+  opacity: 1;
+}
+
+.poem__gallery__media {
+  position: relative;
+  height: 43.7rem;
+  width: 29.2rem;
+  margin: 0 4rem;
+  z-index: 2;
+    
+}
+     
+.poem__gallery__media__image {
+  @extend %cover;
+  object-fit: cover;
+  opacity: 1;
+    
+}
+
+
+.poem__link {
+  @extend %description-14;
+  letter-spacing: 0.05;
+  // this is the button, he usually prefers to set width and height rather than set paddings
+  width: 28.8rem;
+  height: 6rem;
+  align-items: center;
+  justify-content: center;
+  display:flex;
+  // position: absolute; // because it's in a wrapper
+  // bottom: 5rem;
+  // left: 50%;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  // transform: translateX(-50%);
+  z-index: 2;
+} 
+
+.poem__link__icon {
+  // @extend %cover;
+}

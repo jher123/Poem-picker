@@ -5,7 +5,7 @@
   "scripts": {
     "start": "concurrently --kill-others \"npm run backend:development\" \"npm run frontend:development\"",
     "build": "webpack --progress --config webpack.config.build.js",
-    "backend:development": "webpack-dev-server --progress --config webpack.config.development.js",
+    "backend:development": "webpack serve --progress --config webpack.config.development.js",
     "frontend:development": "webpack serve --progress --config webpack.config.development.js"
   },
   "author": "Joanna Herman",

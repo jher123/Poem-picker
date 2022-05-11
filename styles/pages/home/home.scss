@@ -19,45 +19,110 @@
 }
 
 
+.home__hero__title {
 
-.home__content__title__serif {
+}
+
+.home__hero__title__serif {
     @extend %title-lg-serif;
 
     color: $color-golden;
     text-align: left
 }
 
-.home__content__title__sans {
+.home__hero__title__sans {
     @extend %title-lg-sans;
 
     color: $color-golden;
     text-align: right;
 }
 
+.home__mood {
 
-.home__content__label {
-    @extend %description-14;
+}
+
+.home__mood__label {
+    @extend %title-md;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    text-align: center;
 }
 
 
-.home__link {
-    @extend %description-14;
-    letter-spacing: 0.05;
-    // this is the button, he usually prefers to set width and height rather than set paddings
-    width: 28.8rem;
-    height: 6rem;
-    align-items: center;
+.home__grid__wrapper {
+    display: flex;
     justify-content: center;
-    display:flex;
-    // position: absolute; // because it's in a wrapper
-    // bottom: 5rem;
-    // left: 50%;
-    text-transform: uppercase;
-    letter-spacing: 0.05rem;
-    // transform: translateX(-50%);
-    z-index: 2;
-} 
+}
 
-.home__link__icon {
-    @extend %cover;
+.home__grid{
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+   
+    height: 55rem;
+    width: 55rem;
+}
+
+
+.home__item {
+    border: 1px solid $color-green;
+    display: flex;
+    place-items: center;
+   
+}
+
+.home__grid__link__text {
+    text-align: center;
+    color: $color-black;
+    text-transform: uppercase;
+}
+
+
+.home__item--clouds {
+    background: $color-golden;
+    animation: change-background-1 12s ease infinite;
+}
+
+.home__item--spring {
+    background: $color-green;
+    animation: change-background-2 12s ease infinite;
+}
+
+// .home__item--spring {
+//     background: $color-green;
+// }
+
+@keyframes change-background-1 {
+    0% {
+      background: $color-green;
+    }
+    50% {
+      background: $color-white;
+    }
+    100% {
+        background: $color-green;
+    }
   }
+
+  @keyframes change-background-2 {
+    0% {
+      background: $color-golden;
+    }
+    50% {
+      background: $color-white;
+    }
+    100% {
+      background: $color-golden;
+    }
+  }
+
+
+
+.home__footnote {
+    position: absolute;
+    max-width: 40rem;
+    text-align: left;
+    left: 10px;
+    bottom: 10px;
+}
+

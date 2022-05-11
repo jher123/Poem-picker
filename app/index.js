@@ -29,7 +29,7 @@ class App {
     }
     // this.page = this.pages[this.url]
     if (this.url.indexOf('/poem') > -1) {
-      this.page = this.case
+      this.page = this.poem
       this.page.onResize()
     } else {
       this.page = this.pages[this.url]
